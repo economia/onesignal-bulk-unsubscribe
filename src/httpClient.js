@@ -3,7 +3,7 @@ const axios = require('axios')
 
 let client
 
-function createClient({ timeout, restApiKey }) {
+function createClient({ timeout, restApiKey, parallel = 64 }) {
   return axios.create({
     baseURL: `https://onesignal.com/api/v1/`,
     timeout,
@@ -13,7 +13,7 @@ function createClient({ timeout, restApiKey }) {
     },
     httpsAgent: new https.Agent({
       keepAlive: true,
-      maxSockets: 10,
+      maxSockets: parallel,
     }),
   })
 }

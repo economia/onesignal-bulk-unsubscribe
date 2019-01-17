@@ -31,7 +31,8 @@ bulkUnsubscribe({
   backOff: <int>ms,
   dryRun: <boolean>,
   csvFile: <string>,
-  csvUrl: <string>
+  csvUrl: <string>,
+  parallel: <int>
 })
 ```
 
@@ -106,7 +107,7 @@ bulkUnsubscribe({
 
 ### `timeout`
 
-You can specify a timeout in ms for all requests to OneSignal API. Default value is `5000`
+You can specify a timeout in ms for all requests to OneSignal API. Default value is `5000`.
 
 ### `backOff`
 
@@ -123,6 +124,10 @@ You can simply provide `dryRun` option to only console.log players that would be
 
 Those options also serve for debugging and testing. By default, this package first creates a CSV export and then downloads it from OneSignal,
 doing so multiple times might be wasteful, you can either specify CSV export URL or point to existing CSV file on your drive altogether.
+
+### `parallel`
+
+Specify the limit of `maxSockets` in https Agent and parallelism of mutations. Default value is `64`.
 
 ## CLI
 
