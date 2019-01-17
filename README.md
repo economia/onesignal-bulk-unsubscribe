@@ -112,7 +112,7 @@ You can specify a timeout in ms for all requests to OneSignal API. Default value
 
 You can specify a backOff time in ms for downloading CSV file.
 In general, generating a CSV report by OneSignal takes several seconds and provided URL returns 403 status code until the export is generated.
-By providing a `backOff`, the package wait for specified number of ms before retrying again. Default value is '10000'.
+By providing a `backOff`, the package wait for specified number of ms before retrying again. Default value is `10000`.
 
 ### `dryRun`
 
