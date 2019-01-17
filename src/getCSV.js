@@ -5,13 +5,12 @@ const retry = require(`./asyncRetry`)
 const getCSVUrl = require(`./getCSVUrl`)
 const setPromisedTimeout = require('./setPromisedTimeout')
 
-function downloadCSV(url) {
+function downloadCSV(url, backOff) {
   // Requesting a CSV Download URL triggeres actual generation of CSV report
   // Wait for 10seconds and then try to download it 3 times
   // with 10s beck off period bewteen each try
   // use new Promise to convert timeout to a Promise
   console.debug(`Scheduling download of CSV from ${url}`)
-  const backOff = 10000
   return setPromisedTimeout(async () => {
     return retry(
       async function downloadCSV() {
@@ -37,6 +36,7 @@ function downloadCSV(url) {
  */
 module.exports = async function getCSV({
   timeout = 5000,
+  backOff = 10000,
   appId,
   restApiKey,
   csvUrl = null,
@@ -61,7 +61,7 @@ module.exports = async function getCSV({
   // Download CSV
   let csv
   try {
-    csv = await downloadCSV(csvUrl)
+    csv = await downloadCSV(csvUrl, backOff)
   } catch (error) {
     console.error('Failed to download CSV, stopping execution', error)
     process.exit()

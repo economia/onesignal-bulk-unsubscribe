@@ -2,7 +2,11 @@
   "name": "onesignal-bulk-unsubscribe",
   "version": "0.1.0",
   "description": "Script for unsubscribing users of OneSignal app in bulk using filtered queries",
-  "keywords": ["onesignal", "unsubscribe", "users"],
+  "keywords": [
+    "onesignal",
+    "unsubscribe",
+    "users"
+  ],
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint src/",

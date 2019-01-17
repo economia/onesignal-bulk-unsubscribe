@@ -6,6 +6,13 @@ OneSignal currently doesn`t provide any API endpoints for working with Segments 
 
 **Caution!** Unsubscribing players is not a destructive job, you can still subscribe them again, but we do NOT provide a way to revert any changes. Use bulk unsubscribe with caution.
 
+## Why
+
+There is an existing `onesignal-node` (package by zeyneloz)[https://github.com/zeyneloz/onesignal-node] but there are two main reasons why this package doesn't use it.
+
+* `onesignal-node` doesn't use an Agent for limiting number of open connections, unsubscribing thousands of players at once would simply be too much. This package uses `axios` with `httpsAgent` and `maxSockets` set to `10` to not consume all your computer's sockets.
+* `onesignal-node` is an API client, so it only gives out CSV URL, this package can download the CSV, including waiting for it being generated, ungzip it and parse it using `csvtojson` lib.
+
 ## How to install
 
 `npm install --save onesignal-bulk-unsubscribe`
@@ -18,7 +25,10 @@ const bulkUnsubscribe = require('onesignal-bulk-unsubscribe')
 bulkUnsubscribe({
   appId: '<APP_ID>', // required
   restApiKey: '<REST_API_KEY>' // required
-  filter: (<player>) => <boolean>,
+  filter: <player> => <boolean>,
+  mutation: <object> | <player> => <object>,
+  timeout: <int>ms,
+  backOff: <int>ms,
   dryRun: <boolean>,
   csvFile: <string>,
   csvUrl: <string>
@@ -54,6 +64,55 @@ function filter(player) {
   return isSubscribed(player) && isInactiveFor30Days(player) && player.language !== 'en'
 }
 ```
+
+### `mutation`
+
+By default, this package marks all players as unsubscribed (state `-1`), but you can specify a different mutation to selected players.
+For example, after trying out this package using a `dryRun`, you can decide to first mark all players by a tag:
+
+```
+bulkUnsubscribe({
+  mutation: {
+    tags: {
+      toDelete: "true"
+    }
+  }
+})
+```
+
+This way, you can verify your filter really works correctly. You can even re-subscribe all players in this way with caution!
+
+If you wish to modify users based on current properties, a function returning a mutation can be provided:
+
+```
+bulkUnsubscribe({
+  mutation: player => {
+    if (player.game_version === '1.0') {
+      return {
+        game_version: '1.1'
+      }
+    }
+
+    if (player.game_version === '2.0') {
+      return {
+        game_version: '2.1'
+      }
+    }
+
+    return {}
+  })
+})
+```
+
+### `timeout`
+
+You can specify a timeout in ms for all requests to OneSignal API. Default value is `5000`
+
+### `backOff`
+
+You can specify a backOff time in ms for downloading CSV file.
+In general, generating a CSV report by OneSignal takes several seconds and provided URL returns 403 status code until the export is generated.
+By providing a `backOff`, the package wait for specified number of ms before retrying again. Default value is '10000'.
 
 ### `dryRun`
 
