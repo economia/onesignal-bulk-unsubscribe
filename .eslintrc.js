@@ -5,5 +5,11 @@ module.exports = {
   ],
   "env": {
     "node": true
-  }
+  },
+  "overrides": [{
+    "files": ["*.spec.js"],
+    "env": {
+      "jest": true
+    }
+  }]
 };
