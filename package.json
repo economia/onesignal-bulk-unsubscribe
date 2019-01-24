@@ -10,10 +10,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "lint": "eslint src/",
     "format": "npm run prettier -- --write",
-    "prettier": "prettier **/*.js",
-    "validate": "npm run lint && npm run test && npm run prettier -- --list-different"
+    "prettier": "prettier **/*.js"
   },
   "author": "Economia, a.s., Czech Republic",
   "license": {
@@ -35,12 +33,22 @@
     "eslint-plugin-standard": "^4.0.0",
     "husky": "^1.3.1",
     "jest": "^23.6.0",
+    "jest-runner-eslint": "^0.7.1",
+    "lint-staged": "^8.1.0",
     "prettier": "^1.15.3"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run validate"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write",
+      "git add",
+      "jest --bail --findRelatedTests"
+    ]
   },
   "files": [
     "src/**/*.js",

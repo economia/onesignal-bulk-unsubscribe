@@ -2,10 +2,21 @@
 // https://jestjs.io/docs/en/configuration.html
 
 module.exports = {
-  clearMocks: true,
-  collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.js'],
-  coverageDirectory: 'coverage',
-  coverageReporters: ['lcov'],
-  testEnvironment: 'node',
-};
+  projects: [
+    {
+      runner: 'jest-runner-eslint',
+      displayName: 'lint',
+      testMatch: ['src/*.js', 'src/**/*.js'],
+      watchPlugins: ['jest-runner-eslint/watch-fix'],
+    },
+    {
+      displayName: 'test',
+      clearMocks: true,
+      collectCoverage: true,
+      collectCoverageFrom: ['src/**/*.js'],
+      coverageDirectory: 'coverage',
+      coverageReporters: ['lcov'],
+      testEnvironment: 'node',
+    },
+  ],
+}
