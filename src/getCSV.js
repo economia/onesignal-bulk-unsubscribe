@@ -8,7 +8,7 @@ const setPromisedTimeout = require('./setPromisedTimeout')
 function downloadCSV(url, backOff) {
   // Requesting a CSV Download URL triggeres actual generation of CSV report
   // Wait for 10seconds and then try to download it 3 times
-  // with 10s beck off period bewteen each try
+  // with 10s back off period bewteen each try
   // use new Promise to convert timeout to a Promise
   console.debug(`Scheduling download of CSV from ${url}`)
   return setPromisedTimeout(async () => {
