@@ -13,7 +13,7 @@
     "lint": "eslint src/",
     "format": "npm run prettier -- --write",
     "prettier": "prettier **/*.js",
-    "validate": "npm run lint && npm run prettier -- --list-different"
+    "validate": "npm run lint && npm run test && npm run prettier -- --list-different"
   },
   "author": "Economia, a.s., Czech Republic",
   "license": {
