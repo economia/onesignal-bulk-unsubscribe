@@ -52,6 +52,7 @@
   },
   "files": [
     "src/**/*.js",
-    "src/*.js"
+    "src/*.js",
+    "!*.spec.js"
   ]
 }
