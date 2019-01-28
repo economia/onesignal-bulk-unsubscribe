@@ -1,6 +1,6 @@
 {
   "name": "onesignal-bulk-unsubscribe",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Script for unsubscribing users of OneSignal app in bulk using filtered queries",
   "keywords": [
     "onesignal",
