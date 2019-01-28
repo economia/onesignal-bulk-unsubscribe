@@ -18,6 +18,10 @@
     "type": "MIT",
     "url": "https://www.opensource.org/licenses/mit-license.php"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EconomiaPrague/onesignal-bulk-unsubscribe"
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "csvtojson": "^2.0.8",
