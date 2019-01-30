@@ -6,7 +6,7 @@ module.exports = {
     {
       runner: 'jest-runner-eslint',
       displayName: 'lint',
-      testMatch: ['src/*.js', 'src/**/*.js'],
+      testMatch: ['<rootDir>/src/*.js', '<rootDir>/src/**/*.js'],
       watchPlugins: ['jest-runner-eslint/watch-fix'],
     },
     {
